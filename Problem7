@@ -1,0 +1,99 @@
+#include <stdio.h>
+int main()
+{
+	int n, i, l, j, a[20], b[20][5] = {-1}, num, score[20] = {0,}, prime, max, core;
+
+	scanf_s("%d", &n);
+
+	for (i = 0; i < n; i++)
+	{
+		scanf("%d", &a[i]);
+	}
+
+	for (i = 0; i < n; i++)
+	{
+		num = a[i];
+
+		for (l = 0; l < 5; l++)
+		{
+			if (num > 0)
+			{
+				b[i][l] = num % 10;
+				num = num / 10;
+			}
+		}
+	}
+
+	for (i = 0; i < n; i++)
+	{
+		for (l = 0; l < 5; l++)
+		{
+			num = 0;
+
+			for (j = 4; j >= l; j--)
+			{
+				if (b[i][j] >= 0)
+				{
+					num += b[i][j];
+				}
+			}
+
+			core = a[i];
+
+			for (j = 0; j < l; j++)
+			{
+				core = core / 10;
+			}
+
+			if (num > 0 && core % num == 0 && core > 0)
+			{
+				prime = 0;
+
+				score[i] += 1;
+
+				for (j = 2; j < (core / num); j++)
+				{
+					if ((core / num) % j == 0)
+					{
+						prime = 1;
+						break;
+					}
+				}
+
+				if (prime == 0 && core / num != 1)
+				{
+					score[i] += 1;
+				}
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+
+	max = -1;
+
+	for (i = 0; i < n; i++)
+	{
+		if (score[i] > 0)
+		{
+			printf("%d - %d\n", a[i], score[i]);
+
+			if (score[max] < score[i] || max == -1 || (score[max] == score[i] && a[max] < a[i]))
+			{
+				max = i;
+			}
+		}
+		else
+		{
+			printf("%d - 탈락\n", a[i]);
+		}
+	}
+
+	if (max != -1)
+		printf("%d\n", a[max]);
+	else
+		printf("우승자 없음\n");
+
+}
