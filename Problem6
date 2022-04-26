@@ -1,0 +1,79 @@
+#include <stdio.h>
+int main()
+{
+	int i, l, b[8][4] = { 0 }, t, total1, total2, j = 0;
+	char a[8][9];
+
+	for (i = 0; i < 8; i++)
+	{
+		for (l = 0; l < 9; l++)
+		{
+			scanf("%c", &a[i][l],1);
+		}
+	}
+
+	for (i = 0; i < 8; i++)
+	{
+		for (l = 0; l < 8; l++)
+		{
+				if (a[i][l] == 'G')
+				{
+					if (j%2 == 0)
+					{
+						b[i][l/2] += 4;
+					}
+					else
+					{
+						b[i][l/2] += 1;
+					}
+				}
+				else if (a[i][l] == 'B')
+				{
+					if (j%2 == 0)
+					{
+						b[i][l/2] += 8;
+					}
+					else
+					{
+						b[i][l/2] += 2;
+					}
+				}
+				else if (a[i][l] == 'W')
+				{
+					if (j%2 == 0)
+					{
+						b[i][l/2] += 12;
+					}
+					else
+					{
+						b[i][l/2] += 3;
+					}
+				}
+				else if (a[i][l] == 'R')
+				{
+					if (j % 2 == 0)
+					{
+						b[i][l/2] += 0;
+					}
+					else
+					{
+						b[i][l/2] += 0;
+					}
+				}
+				else
+				{
+					b[i][0] = -111;
+				}
+
+				++j;
+		}
+	}
+
+	for (i = 0; i < 8; i++)
+	{
+		if(b[i][0] >= 0)
+			printf("%X%X %X%X\n", b[i][0], b[i][1], b[i][2], b[i][3]);
+		else
+			printf("입력 오류\n");
+	}
+}
